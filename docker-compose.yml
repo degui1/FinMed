@@ -1,0 +1,9 @@
+services:
+  finmed-pg:
+    image: bitnami/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=dockeruser
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_USERNAME=findmed

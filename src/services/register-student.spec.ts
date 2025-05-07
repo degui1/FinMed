@@ -26,25 +26,7 @@ describe('Register student service', () => {
     expect(student.email).toEqual('johndoe@example.com')
   })
 
-  it('should not be able to register an user that already exists', async () => {
-    await registerStudentService.execute({
-      email: 'johndoe@example.com',
-      name: 'John',
-      surname: 'Doe',
-      password: '123456',
-    })
-
-    await expect(() =>
-      registerStudentService.execute({
-        email: 'johndoe@example.com',
-        name: 'John',
-        surname: 'Doe',
-        password: '123456',
-      }),
-    ).rejects.toBeInstanceOf(StudentAlreadyExistsError)
-  })
-
-  it('should not be able to register an user that already exists', async () => {
+  it('should not be able to register an student that already exists', async () => {
     await registerStudentService.execute({
       email: 'johndoe@example.com',
       name: 'John',

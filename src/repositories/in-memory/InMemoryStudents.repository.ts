@@ -27,4 +27,12 @@ export class InMemoryStudentsRepository implements IStudentsRepository {
 
     return student
   }
+
+  async findById(id: string) {
+    const student = this.students.find((student) => student.id === id)
+
+    if (!student) return null
+
+    return student
+  }
 }

@@ -16,7 +16,7 @@ interface RegisterStudentServiceResponse {
 }
 
 export class RegisterStudentService {
-  constructor(private studentsRepository: IStudentsRepository) {}
+  constructor(private readonly studentsRepository: IStudentsRepository) {}
 
   async execute({
     email,

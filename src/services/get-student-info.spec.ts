@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { InMemoryStudentsRepository } from '@/repositories/in-memory/InMemoryStudents.repository'
+import { InMemoryStudentsRepository } from '@/repositories/in-memory/in-memory-students.repository'
 
 import { GetStudentInfoService } from './get-student-info.service'
 import { ResourceNotFoundError } from './erros/resource-not-found.error'

@@ -35,4 +35,16 @@ export class InMemoryStudentsRepository implements IStudentsRepository {
 
     return student
   }
+
+  async update(data: Student) {
+    const studentIndex = this.students.findIndex(
+      (student) => student.id === data.id,
+    )
+
+    if (studentIndex >= 0) {
+      this.students[studentIndex] = data
+    }
+
+    return data
+  }
 }

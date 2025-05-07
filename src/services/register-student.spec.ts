@@ -1,6 +1,6 @@
 import { compare } from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { InMemoryStudentsRepository } from '@/repositories/in-memory/InMemoryStudents.repository'
+import { InMemoryStudentsRepository } from '@/repositories/in-memory/in-memory-students.repository'
 
 import { RegisterStudentService } from './register-student.service'
 import { StudentAlreadyExistsError } from './erros/student-already-exists.error'

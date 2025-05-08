@@ -1,22 +1,20 @@
 import { z } from 'zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { CreateSimulationService } from '@/services/create-simulation.service'
+import { DeleteSimulationService } from '@/services/delete-simulation.service'
 import { PrismaStudentsRepository } from '@/repositories/prisma/prisma-students.repository'
 import { PrismaFinancingSimulationsRepository } from '@/repositories/prisma/prisma-financing-simulations.repository'
-import { InvalidNumberOfInstallmentsError } from '@/services/erros/invalid-number-of-installments.error'
-import { InvalidMonthlyInstallmentAmountError } from '@/services/erros/invalid-monthly-installment-amount.error'
+import { OperationNotPermittedError } from '@/services/erros/operation-not-permitted.error'
 import { ResourceNotFoundError } from '@/services/erros/resource-not-found.error'
 
 const createSimulationBodySchema = z.object({
-  installments: z.number().min(1),
-  totalAmountCents: z.number().min(1),
+  financingSimulationId: z.string().uuid(),
 })
 
-export async function createSimulationController(
+export async function deleteSimulationController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const { installments, totalAmountCents } = createSimulationBodySchema.parse(
+  const { financingSimulationId } = createSimulationBodySchema.parse(
     request.body,
   )
 
@@ -24,15 +22,14 @@ export async function createSimulationController(
     const studentsRepository = new PrismaStudentsRepository()
     const financingSimulationsRepository =
       new PrismaFinancingSimulationsRepository()
-    const createSimulationService = new CreateSimulationService(
+    const deleteSimulationService = new DeleteSimulationService(
       studentsRepository,
       financingSimulationsRepository,
     )
 
-    await createSimulationService.execute({
+    await deleteSimulationService.execute({
       studentId: request.user.sub,
-      installments,
-      totalAmountCents,
+      financingSimulationId,
     })
 
     return reply.status(201).send()
@@ -41,12 +38,8 @@ export async function createSimulationController(
       return reply.status(400).send({ message: error.message })
     }
 
-    if (error instanceof InvalidNumberOfInstallmentsError) {
-      return reply.status(400).send({ message: error.message })
-    }
-
-    if (error instanceof InvalidMonthlyInstallmentAmountError) {
-      return reply.status(400).send({ message: error.message })
+    if (error instanceof OperationNotPermittedError) {
+      return reply.status(405).send({ message: error.message })
     }
 
     throw error

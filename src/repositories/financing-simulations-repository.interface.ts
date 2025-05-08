@@ -9,4 +9,7 @@ export interface IFinancingSimulationsRepository {
   delete: (
     financingSimulation: FinancingSimulation,
   ) => Promise<FinancingSimulation>
+  update: (
+    financingSimulation: FinancingSimulation,
+  ) => Promise<FinancingSimulation>
 }

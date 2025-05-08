@@ -50,4 +50,16 @@ export class InMemoryFinancingSimulationsRepository
 
     return financingSimulation
   }
+
+  async update(data: FinancingSimulation) {
+    const simulationIndex = this.financingSimulations.findIndex(
+      (simulation) => simulation.id === data.id,
+    )
+
+    if (simulationIndex >= 0) {
+      this.financingSimulations[simulationIndex] = data
+    }
+
+    return data
+  }
 }

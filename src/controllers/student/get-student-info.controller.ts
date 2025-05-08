@@ -3,7 +3,7 @@ import { PrismaStudentsRepository } from '@/repositories/prisma/prisma-students.
 import { GetStudentInfoService } from '@/services/get-student-info.service'
 import { ResourceNotFoundError } from '@/services/erros/resource-not-found.error'
 
-export async function updateStudentInfoController(
+export async function getStudentInfoController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
@@ -11,11 +11,11 @@ export async function updateStudentInfoController(
     const studentsRepository = new PrismaStudentsRepository()
     const getStudentInfoService = new GetStudentInfoService(studentsRepository)
 
-    await getStudentInfoService.execute({
+    const { student } = await getStudentInfoService.execute({
       studentId: request.user.sub,
     })
 
-    return reply.status(201).send()
+    return reply.status(200).send({ student })
   } catch (error) {
     if (error instanceof ResourceNotFoundError) {
       return reply.status(400).send({ message: error.message })

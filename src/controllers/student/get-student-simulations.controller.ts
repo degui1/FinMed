@@ -4,7 +4,7 @@ import { GetStudentSimulationsService } from '@/services/get-student-simulations
 import { ResourceNotFoundError } from '@/services/erros/resource-not-found.error'
 import { PrismaFinancingSimulationsRepository } from '@/repositories/prisma/prisma-financing-simulations.repository'
 
-export async function GetStudentSimulationsController(
+export async function getStudentSimulationsController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
@@ -18,9 +18,11 @@ export async function GetStudentSimulationsController(
       financingSimulationsRepository,
     )
 
-    await getStudentSimulationsService.execute({ studentId: request.user.sub })
+    const { financingSimulations } = await getStudentSimulationsService.execute(
+      { studentId: request.user.sub },
+    )
 
-    return reply.status(201).send()
+    return reply.status(201).send({ financingSimulations })
   } catch (error) {
     if (error instanceof ResourceNotFoundError) {
       return reply.status(400).send({ message: error.message })

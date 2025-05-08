@@ -30,7 +30,7 @@ export async function updateStudentInfoController(
       surname,
     })
 
-    return reply.status(201).send()
+    return reply.status(204).send()
   } catch (error) {
     if (error instanceof ResourceNotFoundError) {
       return reply.status(400).send({ message: error.message })

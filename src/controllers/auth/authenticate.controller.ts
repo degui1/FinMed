@@ -22,9 +22,7 @@ export async function authenticateController(
     const { student } = await authenticateService.execute({ email, password })
 
     const token = await reply.jwtSign({
-      sign: {
-        sub: student.id,
-      },
+      sub: student.id,
     })
 
     return reply.status(200).send({

@@ -1,0 +1,93 @@
+@baseUrl = http://localhost:3333/api
+@authToken = {{authenticate.response.body.token}}
+
+############### Auth ###############
+
+# @name register_student
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "name": "John",
+  "surname": "Doe",
+  "email": "johndoe@example.com",
+  "password": "123456"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "123456"
+}
+
+###
+
+############### Student ###############
+
+# @name get_student_info
+GET {{baseUrl}}/me
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name update_student_info
+PUT {{baseUrl}}/me
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "John updated"
+}
+
+###
+
+# @name get_student_simulations
+GET {{baseUrl}}/me/simulations
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+############### Simulations ###############
+
+# @name create_simulation
+POST {{baseUrl}}/simulations
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "installments": 5,
+  "totalAmountCents": 1000000
+}
+
+###
+
+# @name delete_simulation
+DELETE {{baseUrl}}/simulations
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "financingSimulationId": "3f18545f-ff3a-4152-9fff-a01064ee83de"
+}
+
+###
+
+# @name get_student_simulations
+PUT {{baseUrl}}/simulations
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "financingSimulationId": "4e6c0bc8-e94f-4af8-af59-7a23a73324d3",
+  "installments": 10,
+  "totalAmountCents": 2000000
+}
+
+###

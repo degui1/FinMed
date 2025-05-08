@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import { ZodError } from 'zod'
 import fastifyJwt from '@fastify/jwt'
+
 import { env } from './env'
 
 export const app = fastify()

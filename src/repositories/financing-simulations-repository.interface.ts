@@ -6,4 +6,7 @@ export interface IFinancingSimulationsRepository {
   ) => Promise<FinancingSimulation>
   findById: (id: string) => Promise<FinancingSimulation | null>
   findManyByStudentId: (studentId: string) => Promise<FinancingSimulation[]>
+  delete: (
+    financingSimulation: FinancingSimulation,
+  ) => Promise<FinancingSimulation>
 }

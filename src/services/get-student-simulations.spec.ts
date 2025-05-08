@@ -11,7 +11,7 @@ let studentsRepository: InMemoryStudentsRepository
 let financingSimulationsRepository: InMemoryFinancingSimulationsRepository
 let getStudentSimulationsService: GetStudentSimulationsService
 
-describe('Create financing simulation service', () => {
+describe('Get student financing simulations service', () => {
   beforeEach(() => {
     studentsRepository = new InMemoryStudentsRepository()
     financingSimulationsRepository =

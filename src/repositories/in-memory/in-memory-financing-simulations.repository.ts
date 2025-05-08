@@ -40,4 +40,14 @@ export class InMemoryFinancingSimulationsRepository
 
     return simulations
   }
+
+  async delete(financingSimulation: FinancingSimulation) {
+    const simulationsFiltered = this.financingSimulations.filter(
+      (simulation) => simulation.id !== financingSimulation.id,
+    )
+
+    this.financingSimulations = simulationsFiltered
+
+    return financingSimulation
+  }
 }

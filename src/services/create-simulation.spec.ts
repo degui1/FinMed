@@ -10,14 +10,14 @@ import { InvalidMonthlyInstallmentAmountError } from './erros/invalid-monthly-in
 
 let studentsRepository: InMemoryStudentsRepository
 let financingSimulationsRepository: InMemoryFinancingSimulationsRepository
-let registerStudentService: CreateSimulationService
+let createSimulationService: CreateSimulationService
 
 describe('Create financing simulation service', () => {
   beforeEach(() => {
     studentsRepository = new InMemoryStudentsRepository()
     financingSimulationsRepository =
       new InMemoryFinancingSimulationsRepository()
-    registerStudentService = new CreateSimulationService(
+    createSimulationService = new CreateSimulationService(
       studentsRepository,
       financingSimulationsRepository,
     )
@@ -31,7 +31,7 @@ describe('Create financing simulation service', () => {
       password: '123456',
     })
 
-    const { financingSimulation } = await registerStudentService.execute({
+    const { financingSimulation } = await createSimulationService.execute({
       studentId: createdStudent.id,
       installments: MAX_INSTALLMENTS,
       totalAmountCents: 1000000,
@@ -51,7 +51,7 @@ describe('Create financing simulation service', () => {
     })
 
     await expect(() =>
-      registerStudentService.execute({
+      createSimulationService.execute({
         studentId: createdStudent.id,
         installments: MAX_INSTALLMENTS * 100,
         totalAmountCents: 1000000,
@@ -59,7 +59,7 @@ describe('Create financing simulation service', () => {
     ).rejects.toBeInstanceOf(InvalidNumberOfInstallmentsError)
 
     await expect(() =>
-      registerStudentService.execute({
+      createSimulationService.execute({
         studentId: createdStudent.id,
         installments: MAX_INSTALLMENTS * -100,
         totalAmountCents: 1000000,
@@ -69,7 +69,7 @@ describe('Create financing simulation service', () => {
 
   it('should not be able to create a simulation with invalid student', async () => {
     await expect(() =>
-      registerStudentService.execute({
+      createSimulationService.execute({
         studentId: 'invalid-student',
         installments: MAX_INSTALLMENTS,
         totalAmountCents: 1000000,
@@ -86,7 +86,7 @@ describe('Create financing simulation service', () => {
     })
 
     await expect(() =>
-      registerStudentService.execute({
+      createSimulationService.execute({
         studentId: createdStudent.id,
         installments: MAX_INSTALLMENTS,
         totalAmountCents: -1000000,

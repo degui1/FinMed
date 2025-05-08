@@ -5,4 +5,5 @@ export interface IFinancingSimulationsRepository {
     data: Prisma.FinancingSimulationUncheckedCreateInput,
   ) => Promise<FinancingSimulation>
   findById: (id: string) => Promise<FinancingSimulation | null>
+  findManyByStudentId: (studentId: string) => Promise<FinancingSimulation[]>
 }

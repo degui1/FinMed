@@ -32,4 +32,12 @@ export class InMemoryFinancingSimulationsRepository
 
     return simulation
   }
+
+  async findManyByStudentId(studentId: string) {
+    const simulations = this.financingSimulations.filter(
+      (simulation) => simulation.student_id === studentId,
+    )
+
+    return simulations
+  }
 }

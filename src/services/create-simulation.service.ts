@@ -2,11 +2,11 @@ import { MAX_INSTALLMENTS, INTEREST_RATE } from '@/constants'
 import { FinancingSimulation } from '@generated'
 import { IStudentsRepository } from '@/repositories/students-repository.interface'
 import { IFinancingSimulationsRepository } from '@/repositories/financing-simulations-repository.interface'
+import { calculateMonthlyPayment } from '@/utils/calculate-monthly-payment'
 
 import { ResourceNotFoundError } from './erros/resource-not-found.error'
 import { InvalidNumberOfInstallmentsError } from './erros/invalid-number-of-installments.error'
 import { InvalidMonthlyInstallmentAmountError } from './erros/invalid-monthly-installment-amount.error'
-import { calculateMonthlyPayment } from '@/utils/calculate-monthly-payment'
 
 interface CreateSimulationServiceRequest {
   studentId: string

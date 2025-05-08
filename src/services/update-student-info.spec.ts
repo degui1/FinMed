@@ -106,9 +106,9 @@ describe('Update student info service', () => {
     expect(isStudentPasswordHashedCorrectly).toBe(true)
   })
 
-  it('should not be able to update an user that does not exit', async () => {
+  it('should not be able to update an student that does not exit', async () => {
     await expect(() =>
-      updateStudentInfoService.execute('user-does-not-exist', {
+      updateStudentInfoService.execute('student-does-not-exist', {
         password: 'passwordUpdated',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)

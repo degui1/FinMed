@@ -29,13 +29,16 @@ export async function createSimulationController(
       financingSimulationsRepository,
     )
 
-    await createSimulationService.execute({
+    const { financingSimulation } = await createSimulationService.execute({
       studentId: request.user.sub,
       installments,
       totalAmountCents,
     })
 
-    return reply.status(201).send()
+    return reply.status(200).send({
+      id: financingSimulation.id,
+      monthlyPaymentCents: financingSimulation.monthly_payment_cents,
+    })
   } catch (error) {
     if (error instanceof ResourceNotFoundError) {
       return reply.status(400).send({ message: error.message })

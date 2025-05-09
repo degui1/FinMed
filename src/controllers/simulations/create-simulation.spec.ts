@@ -23,6 +23,8 @@ describe('Create simulation controller', () => {
         totalAmountCents: 100000,
       })
 
-    expect(response.statusCode).toEqual(201)
+    expect(response.statusCode).toEqual(200)
+    expect(response.body).toHaveProperty('id')
+    expect(response.body).toHaveProperty('monthlyPaymentCents')
   })
 })

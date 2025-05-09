@@ -125,6 +125,14 @@ Abaixo estão as rotas da API, com exemplo de requisição e dados esperados. Pa
   }
   ```
 
+#### **Listar simulações do estudante**
+
+* **Método**: `GET /api/me/simulations`
+* **Headers**:
+
+  * `Authorization: Bearer {{authToken}}`
+* **Exemplo de Request**: Nenhum corpo necessário.
+
 ---
 
 ### 💸 Simulações

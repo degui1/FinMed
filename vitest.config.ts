@@ -18,6 +18,15 @@ export default defineConfig({
           name: 'unit',
         },
       },
+      {
+        extends: true,
+        test: {
+          dir: 'src/controllers',
+          name: 'e2e',
+          environment:
+            './prisma/vitest-environment-prisma/prisma-test-environment.ts',
+        },
+      },
     ],
   },
 })

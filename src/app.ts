@@ -25,7 +25,7 @@ app.register(fastifyJwt, {
 app.register(fastifySwagger, {
   swagger: {
     info: {
-      title: 'API - Simulations',
+      title: 'API - FINMED',
       description: 'Documentação das rotas da API do FINMED',
       version: '1.0.0',
     },

@@ -11,8 +11,6 @@ Principais funcionalidades do **FINMEd**:
 
 ## 📋 Variáveis de Ambiente
 
-O sistema requer algumas variáveis de ambiente para funcionamento adequado. Elas são usadas para configurar o ambiente de execução, banco de dados e autenticação. Abaixo estão as variáveis necessárias:
-
 ### Node
 
 * **PORT**: Porta onde o servidor irá rodar (padrão `3333`).
@@ -33,59 +31,43 @@ O sistema requer algumas variáveis de ambiente para funcionamento adequado. Ela
 
 > **Nota**: As chaves privada e pública devem ser geradas com o OpenSSL ou ferramenta similar, utilizando 2048 bits.
 
-### Docker
+## Docker
 
 Este projeto utiliza o **docker-compose** para rodar o banco de dados.
 
-## 🛠 Como Rodar o Projeto
+## 📘 Como usar o Swagger
 
-1. **Clonar o Repositório**:
-
-   ```bash
-   git clone https://github.com/seu-usuario/finmed.git
-   ```
-
-2. **Instalar Dependências**:
-   Entre na pasta do projeto e execute o comando:
-
-   ```bash
-   cd finmed
-   pnpm install
-   ```
-
-3. **Configurar Variáveis de Ambiente**:
-   Crie um arquivo `.env` a partir do arquivo `.env.example` e configure os parâmetros necessários, como as credenciais do banco de dados e as chaves do JWT.
-
-4. **Subir o Projeto**:
-   Execute o comando para iniciar a aplicação em modo de desenvolvimento:
-
-   ```bash
-   pnpm dev
-   ```
-
-## 🧑‍⚖️ Regras de Negócio
-
-* **Autorização e Acesso**: O estudante só pode visualizar ou alterar suas próprias simulações e dados pessoais.
-* **Cálculo da Parcela Mensal**: O valor da parcela é calculado de acordo com a fórmula de **juros compostos**.
-
-### Fórmula para Cálculo da Parcela
-
-A fórmula utilizada para calcular o valor da parcela mensal do financiamento é:
+### URL
 
 ```
-PMT = PV * (i / (1 - (1 + i)^-n))
+{{baseURL}}/documentation
 ```
 
-Onde:
+### 🔐 Autenticação com Bearer Token
 
-* **PMT** = Parcela mensal
-* **PV** = Valor total do financiamento
-* **i** = Taxa de juros mensal (por exemplo, 0.02 para 2%)
-* **n** = Número de parcelas
+Algumas rotas exigem autenticação. Para acessá-las:
+
+1. Faça login usando a rota **POST /login**.
+
+2. Copie o token JWT retornado.
+
+3. No Swagger UI, clique no botão **"Authorize"**.
+
+4. No campo que aparecer, insira assim:
+
+   ```
+   Bearer <seu_token_aqui>
+   ```
+
+   > ⚠️ **Importante**: Inclua a palavra **`Bearer`** seguida de um espaço antes do token.
+
+5. Clique em **"Authorize"** e depois em **"Close"**.
+
+Você agora pode testar rotas protegidas como `/me` ou `/simulations`.
 
 ## 📬 Documentação das Rotas
 
-Abaixo estão as rotas da API, com exemplo de requisição e dados esperados. Para testar, você pode usar ferramentas como **Postman**, **Insomnia** ou pelo arquivo ***client.http*** usando a extensão [rest-client](https://marketplace.visualstudio.com/items/?itemName=humao.rest-client) no vscode.
+Abaixo estão as rotas da API, com exemplo de requisição e dados esperados. Para testar, você pode usar ferramentas como **Postman**, **Insomnia**, pelo arquivo ***client.http*** usando a extensão [rest-client](https://marketplace.visualstudio.com/items/?itemName=humao.rest-client) no vscode ou pelo Swagger usando a rota ***{{baseURL}}/documentation***.
 
 ---
 
@@ -196,34 +178,32 @@ Abaixo estão as rotas da API, com exemplo de requisição e dados esperados. Pa
 
 ## 📋 Scripts de Desenvolvimento
 
-Aqui estão os scripts definidos no `package.json`:
+```bash
+## Executa o servidor em modo de desenvolvimento.
+pnpm dev
+```
 
-* **`dev`**: Executa o servidor em modo de desenvolvimento, utilizando o `tsx`.
+```bash
+## Executa os testes unitários.
+pnpm test
+```
 
-  ```bash
-  pnpm dev
-  ```
+```bash
+## Executa os testes end-to-end.
+pnpm test:e2e
+```
 
-* **`test`**: Executa os testes utilizando o **Vitest** no modo normal.
+```bash
+## Executa os testes em modo de observação.
+pnpm test:watch
+```
 
-  ```bash
-  pnpm test
-  ```
+```bash
+## Executa os testes e gera um relatório de cobertura.
+pnpm test:coverage
+```
 
-* **`test:watch`**: Executa os testes em modo de observação.
-
-  ```bash
-  pnpm test:watch
-  ```
-
-* **`test:coverage`**: Executa os testes e gera um relatório de cobertura, mostrando quais partes do código foram testadas.
-
-  ```bash
-  pnpm test:coverage
-  ```
-
-* **`test:ui`**: Abre a interface gráfica do **Vitest**, permitindo que você execute e visualize os resultados dos testes de forma mais interativa.
-
-  ```bash
-  pnpm test:ui
-  ```
+```bash
+## Abre a interface gráfica do Vitest
+pnpm test:ui
+```

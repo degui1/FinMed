@@ -24,13 +24,23 @@ export async function updateStudentInfoController(
       studentsRepository,
     )
 
-    await updateStudentInfoService.execute(request.user.sub, {
-      name,
-      password,
-      surname,
-    })
+    const { student } = await updateStudentInfoService.execute(
+      request.user.sub,
+      {
+        name,
+        password,
+        surname,
+      },
+    )
 
-    return reply.status(204).send()
+    return reply.status(200).send({
+      student: {
+        id: student.id,
+        email: student.email,
+        name: student.name,
+        surname: student.surname,
+      },
+    })
   } catch (error) {
     if (error instanceof ResourceNotFoundError) {
       return reply.status(400).send({ message: error.message })

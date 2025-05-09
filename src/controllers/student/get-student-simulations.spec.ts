@@ -12,7 +12,7 @@ describe('Get student simulations controller', () => {
     await app.close()
   })
 
-  it('should be able to get student info', async () => {
+  it('should be able to get student simulations', async () => {
     const { token } = await createAndAuthenticateStudent(app)
 
     await request(app.server)

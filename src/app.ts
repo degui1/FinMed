@@ -1,6 +1,8 @@
 import fastify from 'fastify'
 import { ZodError } from 'zod'
 import fastifyJwt from '@fastify/jwt'
+import fastifySwagger from '@fastify/swagger'
+import fastifySwaggerUI from '@fastify/swagger-ui'
 
 import { env } from './env'
 import { studentRoutes } from './controllers/student/student.routes'
@@ -17,6 +19,36 @@ app.register(fastifyJwt, {
   sign: {
     algorithm: 'RS256',
     expiresIn: '5m',
+  },
+})
+
+app.register(fastifySwagger, {
+  swagger: {
+    info: {
+      title: 'API - Simulations',
+      description: 'Documentação das rotas da API do FINMED',
+      version: '1.0.0',
+    },
+    host: 'localhost:3333',
+    schemes: ['http'],
+    consumes: ['application/json'],
+    produces: ['application/json'],
+    securityDefinitions: {
+      bearerAuth: {
+        type: 'apiKey',
+        name: 'Authorization',
+        in: 'header',
+      },
+    },
+    security: [{ bearerAuth: [] }],
+  },
+})
+
+app.register(fastifySwaggerUI, {
+  routePrefix: '/documentation',
+  uiConfig: {
+    docExpansion: 'full',
+    deepLinking: false,
   },
 })
 

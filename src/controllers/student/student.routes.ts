@@ -8,8 +8,47 @@ import { getStudentInfoController } from './get-student-info.controller'
 export async function studentRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
 
-  app.put('', updateStudentInfoController)
-  app.get('', getStudentInfoController)
+  app.put(
+    '',
+    {
+      schema: {
+        tags: ['Student'],
+        summary: 'Atualizar informações do estudante',
+        security: [{ bearerAuth: [] }],
+        body: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            surname: { type: 'string' },
+            password: { type: 'string' },
+          },
+          required: [],
+        },
+      },
+    },
+    updateStudentInfoController,
+  )
 
-  app.get('/simulations', getStudentSimulationsController)
+  app.get(
+    '',
+    {
+      schema: {
+        tags: ['Student'],
+        summary: 'Obter informações do estudante logado',
+        security: [{ bearerAuth: [] }],
+      },
+    },
+    getStudentInfoController,
+  )
+
+  app.get(
+    '/simulations',
+    {
+      schema: {
+        tags: ['Student'],
+        summary: 'Listar simulações do estudante',
+      },
+    },
+    getStudentSimulationsController,
+  )
 }

@@ -27,7 +27,7 @@ jobs:
         - run: pnpm install --frozen-lockfile
 
         - name: Generate prisma client for ci
-          run: pnpm dlx prisma generate
+          run: pnpm prisma generate
         
         - run: pnpm run test:e2e
           env:
